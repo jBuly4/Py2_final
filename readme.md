@@ -1,13 +1,13 @@
 Реализуйте все классы в соответствии с UML диаграммами, и исправьте все *#FIXME*.
 
 **Objects.py**
-![image]()
+![image](https://github.com/jBuly4/Py2_final/blob/master/Objects.png)
 
 **ScreenEngine.py**
-![image]()
+![image](https://github.com/jBuly4/Py2_final/blob/master/ScreenEngine.png)
 
 **Service.py**
-![image]()
+![image](https://github.com/jBuly4/Py2_final/blob/master/Service.png)
 
 **Дополнительные задачи:**
 
