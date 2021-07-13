@@ -127,3 +127,33 @@ class Effect(Hero):
 
 # FIXME
 # add classes
+
+class Berserk(Effect):
+    """ Berserk effect:
+        increase strength +5
+        increase endurance +5
+        decrease intelligence -5 """
+
+    def apply_effect(self):
+        self.stats["strength"] += 5
+        self.stats["endurance"] += 5
+        self.stats["intelligence"] -= 5
+        return self.stats.copy()
+
+
+class Blessing(Effect):
+    """ Blessing effect: increase all characteristics by 2 """
+
+    def apply_effect(self):
+        for key in self.stats:
+            self.stats[key] +=2
+        return self.stats.copy()
+
+
+class Weakness(Effect):
+    """ Weakness effect: decrease all characteristics by 2 """
+
+    def apply_effect(self):
+        for key in self.stats:
+            self.stats[key] -=2
+        return self.stats.copy()
