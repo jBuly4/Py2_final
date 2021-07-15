@@ -45,14 +45,20 @@ class GameSurface(ScreenHandle):
     def draw_hero(self):
         self.game_engine.hero.draw(self)
 
+    def min_xy(self):
+        if self.game_engine.hero.position[0] - self.game_engine.map[0] > 0:
+            min_x = self.game_engine.hero.position[0]
+        else:
+            min_x = 0
+        if self.game_engine.hero.position[1] - self.game_engine.map[1] > 0:
+            min_y = self.game_engine.hero.position[1]
+        else:
+            min_y = 0
+        return min_x, min_y
+
     def draw_map(self):
-
         # FIXME || calculate (min_x,min_y) - left top corner
-
-        min_x = 0
-        min_y = 0
-
-    ##
+        min_x, min_y = self.min_xy()
 
         if self.game_engine.map:
             for i in range(len(self.game_engine.map[0]) - min_x):
@@ -65,10 +71,7 @@ class GameSurface(ScreenHandle):
     def draw_object(self, sprite, coord):
         size = self.game_engine.sprite_size
     # FIXME || calculate (min_x,min_y) - left top corner
-
-        min_x = 0
-        min_y = 0
-
+        min_x, min_y = self.min_xy()
     ##
         self.blit(sprite, ((coord[0] - min_x) * self.game_engine.sprite_size,
                            (coord[1] - min_y) * self.game_engine.sprite_size))
@@ -76,11 +79,8 @@ class GameSurface(ScreenHandle):
     def draw(self, canvas):
         size = self.game_engine.sprite_size
     # FIXME || calculate (min_x,min_y) - left top corner
+        min_x, min_y = self.min_xy()
 
-        min_x = 0
-        min_y = 0
-
-    ##
         self.draw_map()
         for obj in self.game_engine.objects:
             self.blit(obj.sprite[0], ((obj.position[0] - min_x) * self.game_engine.sprite_size,
@@ -88,6 +88,7 @@ class GameSurface(ScreenHandle):
         self.draw_hero()
 
     # draw next surface in chain
+        super().draw(canvas)
 
 
 class ProgressBar(ScreenHandle):
@@ -154,6 +155,7 @@ class ProgressBar(ScreenHandle):
                   (550, 70))
 
     # draw next surface in chain
+        super().draw(canvas)
 
 
 class InfoWindow(ScreenHandle):
