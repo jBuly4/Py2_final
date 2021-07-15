@@ -15,7 +15,8 @@ class Interactive(ABC):
 
     @abstractmethod
     def interact(self, engine, hero):
-        pass
+        for notification in hero.level_up():
+            engine.notify(notification)
 
 
 class Ally(AbstractObject, Interactive):
@@ -129,7 +130,7 @@ class Effect(Hero):
 # add classes
 
 class Berserk(Effect):
-    """ Berserk effect:
+    """ Berserk effects:
         increase strength +5
         increase endurance +5
         decrease intelligence -5 """
@@ -142,18 +143,46 @@ class Berserk(Effect):
 
 
 class Blessing(Effect):
-    """ Blessing effect: increase all characteristics by 2 """
+    """ Blessing effects: increase all characteristics by 2 """
 
     def apply_effect(self):
         for key in self.stats:
-            self.stats[key] +=2
+            self.stats[key] += 2
         return self.stats.copy()
 
 
 class Weakness(Effect):
-    """ Weakness effect: decrease all characteristics by 2 """
+    """ Weakness effects: decrease all characteristics by 2 """
 
     def apply_effect(self):
         for key in self.stats:
-            self.stats[key] -=2
+            self.stats[key] -= 2
         return self.stats.copy()
+
+
+class LowXP(Effect):
+    """ LowXP effects: when meet enemy with higher XP then luck is decreased by 2 """
+
+    def apply_effect(self):
+        self.stats["luck"] -= 2
+        return self.stats.copy()
+
+
+class Enemy(Creature, Interactive):
+    """ Enemy is like Ally but hurts """
+    def __init__(self, icon, stats, xp, position):
+        super().__init__(icon, stats, position)
+        self.experience = xp
+
+    def interact(self, engine, hero):
+        if self.experience >= hero.stats['experience']:
+            hero.stats['luck'] -= 2
+        elif self.stats["strength"] >= hero.stats['strength']:
+            hero.hp -= (self.stats['strength'] - hero.stats['strength'])
+        else:
+            hero.hp -= (hero.stats['strength'] - self.stats['strength']) // 2
+        if hero.hp <= 0:
+            engine.delete_object(hero)
+
+        hero.xp += self.experience // 2
+        super().interact(engine, hero)
