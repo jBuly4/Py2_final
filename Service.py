@@ -65,6 +65,10 @@ def add_gold(engine, hero):
         engine.score -= 0.05
         engine.hero = Objects.Weakness(hero)
         engine.notify("You were cursed")
+    elif random.randint(1, 10) == 3:
+        engine.score -= 0.1
+        engine.hero = Objects.LowXP(hero)
+        engine.notify("You are not Lucky!")
     else:
         engine.score += 0.1
         gold = int(random.randint(10, 1000) * (1.1**(engine.hero.level - 1)))
@@ -105,7 +109,7 @@ class EndMap(MapFactory):
             for i in self.Map:
                 for j in range(len(i)):
                     i[j] = wall if i[j] == '0' else floor1
-         
+
         def get_map(self):
             return self.Map
 
