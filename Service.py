@@ -61,6 +61,7 @@ def remove_effect(engine, hero):
 
 
 def add_gold(engine, hero):
+    """ Here we applying random bad effects: Weakness and LowXP """
     if random.randint(1, 10) == 1:
         engine.score -= 0.05
         engine.hero = Objects.Weakness(hero)
@@ -80,10 +81,12 @@ class MapFactory(yaml.YAMLObject):
 
     @classmethod
     def from_yaml(cls, loader, node):
-
         # FIXME
         # get _map and _obj
-
+        _map = cls.Map()
+        _obj = cls.Object()
+        config = loader.construct_mapping(node)
+        _obj.config.update(config)
         return {'map': _map, 'obj': _obj}
 
 
