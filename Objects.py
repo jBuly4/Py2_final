@@ -18,6 +18,15 @@ class Interactive(ABC):
         for notification in hero.level_up():
             engine.notify(notification)
 
+class AbstractObject(ABC):
+    """ That class must be defined as we see in UML """
+    def __init__(self):
+        pass
+
+    def draw(self, display):
+        display.draw_object(self.sprite, self.position)
+
+
 
 class Ally(AbstractObject, Interactive):
 
