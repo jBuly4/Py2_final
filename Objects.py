@@ -21,10 +21,12 @@ class Interactive(ABC):
 class AbstractObject(ABC):
     """ That class must be defined as we see in UML """
     def __init__(self):
-        pass
+        self.sprite = None
+        self.position = None
 
     def draw(self, display):
         display.draw_object(self.sprite, self.position)
+
 
 
 
@@ -184,14 +186,14 @@ class Enemy(Creature, Interactive):
         self.experience = xp
 
     def interact(self, engine, hero):
-        if self.experience >= hero.stats['experience']:
+        if self.experience >= hero.stats['intelligence']:
             hero.stats['luck'] -= 2
         elif self.stats["strength"] >= hero.stats['strength']:
             hero.hp -= (self.stats['strength'] - hero.stats['strength'])
         else:
             hero.hp -= (hero.stats['strength'] - self.stats['strength']) // 2
         if hero.hp <= 0:
-            engine.delete_object(hero)
+            engine.notify("hero lost health")
 
-        hero.xp += self.experience // 2
+        hero.exp += self.experience // 2
         super().interact(engine, hero)
