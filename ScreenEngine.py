@@ -46,11 +46,11 @@ class GameSurface(ScreenHandle):
         self.game_engine.hero.draw(self)
 
     def min_xy(self):
-        if self.game_engine.hero.position[0] - self.game_engine.map[0] > 0:
+        if self.game_engine.hero.position[0] - 2 > 0:
             min_x = self.game_engine.hero.position[0]
         else:
             min_x = 0
-        if self.game_engine.hero.position[1] - self.game_engine.map[1] > 0:
+        if self.game_engine.hero.position[1] - 2 > 0:
             min_y = self.game_engine.hero.position[1]
         else:
             min_y = 0
