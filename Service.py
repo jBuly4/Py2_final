@@ -3,6 +3,7 @@ import random
 import yaml
 import os
 import Objects
+from abc import ABC
 
 OBJECT_TEXTURE = os.path.join("texture", "objects")
 ENEMY_TEXTURE = os.path.join("texture", "enemies")
@@ -83,17 +84,25 @@ class MapFactory(yaml.YAMLObject):
     def from_yaml(cls, loader, node):
         # FIXME
         # get _map and _obj
-        # _map = cls.Map()
-        # _obj = cls.Objects()
-        # config = loader.construct_mapping(node)
-        # _obj.config.update(config)
-        data = loader.construct_mapping(node)
-        _map = cls().Map()
-        if not data:
-            _obj = cls().Objects()
-        else:
-            _obj = cls().Objects(data)
+        _map = cls.get_map()
+        _obj = cls.get_objects()
+        config = loader.construct_mapping(node)
+        _obj.config.update(config)
         return {'map': _map, 'obj': _obj}
+
+    @classmethod
+    def get_objects(cls):
+        return cls.Objects()
+
+    @classmethod
+    def get_map(cls):
+        return cls.Map()
+
+    class Map(ABC):
+        pass
+
+    class Objects(ABC):
+        pass
 
 
 class EndMap(MapFactory):
@@ -125,7 +134,7 @@ class EndMap(MapFactory):
     class Objects:
         def __init__(self):
             self.objects = []
-            # self.config = {}
+            self.config = {}
 
         def get_objects(self, _map):
             return self.objects
@@ -153,7 +162,7 @@ class RandomMap(MapFactory):
 
         def __init__(self):
             self.objects = []
-            # self.config = {}
+            self.config = {}
 
         def get_objects(self, _map):
 
@@ -332,7 +341,7 @@ class SpecialMap(MapFactory):
 
         def __init__(self):
             self.objects = []
-            # self.config = {}
+            self.config = {}
 
         def get_objects(self, _map):
 
@@ -445,7 +454,7 @@ class EmptyMap(MapFactory):
 
         def __init__(self):
             self.objects = []
-            # self.config = {}
+            self.config = {}
 
         def get_objects(self, _map):
 
