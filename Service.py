@@ -83,10 +83,16 @@ class MapFactory(yaml.YAMLObject):
     def from_yaml(cls, loader, node):
         # FIXME
         # get _map and _obj
-        _map = cls.Map()
-        _obj = cls.Objects()
-        config = loader.construct_mapping(node)
-        _obj.config.update(config)
+        # _map = cls.Map()
+        # _obj = cls.Objects()
+        # config = loader.construct_mapping(node)
+        # _obj.config.update(config)
+        data = loader.construct_mapping(node)
+        _map = cls().Map()
+        if not data:
+            _obj = cls().Objects()
+        else:
+            _obj = cls().Objects(data)
         return {'map': _map, 'obj': _obj}
 
 
@@ -119,7 +125,7 @@ class EndMap(MapFactory):
     class Objects:
         def __init__(self):
             self.objects = []
-            self.config = {}
+            # self.config = {}
 
         def get_objects(self, _map):
             return self.objects
@@ -147,7 +153,7 @@ class RandomMap(MapFactory):
 
         def __init__(self):
             self.objects = []
-            self.config = {}
+            # self.config = {}
 
         def get_objects(self, _map):
 
@@ -326,7 +332,7 @@ class SpecialMap(MapFactory):
 
         def __init__(self):
             self.objects = []
-            self.config = {}
+            # self.config = {}
 
         def get_objects(self, _map):
 
@@ -439,7 +445,7 @@ class EmptyMap(MapFactory):
 
         def __init__(self):
             self.objects = []
-            self.config = {}
+            # self.config = {}
 
         def get_objects(self, _map):
 
