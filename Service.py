@@ -84,7 +84,7 @@ class MapFactory(yaml.YAMLObject):
         # FIXME
         # get _map and _obj
         _map = cls.Map()
-        _obj = cls.Object()
+        _obj = cls.Objects()
         config = loader.construct_mapping(node)
         _obj.config.update(config)
         return {'map': _map, 'obj': _obj}
