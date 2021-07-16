@@ -28,8 +28,6 @@ class AbstractObject(ABC):
         display.draw_object(self.sprite, self.position)
 
 
-
-
 class Ally(AbstractObject, Interactive):
 
     def __init__(self, icon, action, position):
