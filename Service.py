@@ -119,6 +119,7 @@ class EndMap(MapFactory):
     class Objects:
         def __init__(self):
             self.objects = []
+            self.config = {}
 
         def get_objects(self, _map):
             return self.objects
@@ -146,6 +147,7 @@ class RandomMap(MapFactory):
 
         def __init__(self):
             self.objects = []
+            self.config = {}
 
         def get_objects(self, _map):
 
@@ -238,6 +240,7 @@ class SpecialMap(MapFactory):
 
         def __init__(self):
             self.objects = []
+            self.config = {}
 
         def get_objects(self, _map):
 
@@ -326,6 +329,7 @@ class EmptyMap(MapFactory):
     class Objects:
         def __init__(self):
             self.objects = []
+            self.config = {}
 
         def get_objects(self, _map):
             return self.objects
