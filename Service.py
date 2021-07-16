@@ -306,6 +306,30 @@ class SpecialMap(MapFactory):
             return self.objects
 
 
+class EmptyMap(MapFactory):
+    """ Empty is like end map but just empty """
+    yaml_tag = "!empty_map"
+
+    class Map:
+        def __init__(self):
+            self.Map = [[0 for _ in range(21)] for _ in range(21)]
+            for i in range(21):
+                for j in range(21):
+                    if i == 0 or j == 0 or i == 20 or j == 20:
+                        self.Map[j][i] = wall
+                    else:
+                        self.Map[j][i] = [wall, floor1, floor2, floor3, floor1,floor2, floor3, floor1, floor2][random.randint(0, 4)]
+
+        def get_map(self):
+            return self.Map
+
+    class Objects:
+        def __init__(self):
+            self.objects = []
+
+        def get_objects(self, _map):
+            return self.objects
+
 wall = [0]
 floor1 = [0]
 floor2 = [0]
