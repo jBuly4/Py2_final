@@ -75,8 +75,7 @@ class GameSurface(ScreenHandle):
     # FIXME || calculate (min_x,min_y) - left top corner
         min_x, min_y = self.min_xy()
     ##
-        self.blit(sprite, ((coord[0] - min_x) * self.game_engine.sprite_size,
-                           (coord[1] - min_y) * self.game_engine.sprite_size))
+        self.blit(sprite, ((coord[0] - min_x) * size, (coord[1] - min_y) * size))
 
     def draw(self, canvas):
         size = self.game_engine.sprite_size
@@ -85,8 +84,9 @@ class GameSurface(ScreenHandle):
 
         self.draw_map()
         for obj in self.game_engine.objects:
-            self.blit(obj.sprite[0], ((obj.position[0] - min_x) * self.game_engine.sprite_size,
-                                      (obj.position[1] - min_y) * self.game_engine.sprite_size))
+            self.blit(obj.sprite[0],
+            ((obj.position[0] - min_x) * size,                     (obj.position[1] - min_y) * size)
+            )
         self.draw_hero()
 
     # draw next surface in chain
@@ -109,52 +109,36 @@ class ProgressBar(ScreenHandle):
         pygame.draw.rect(self, colors["black"], (50, 30, 200, 30), 2)
         pygame.draw.rect(self, colors["black"], (50, 70, 200, 30), 2)
 
-        pygame.draw.rect(self, colors[
-                         "red"], (50, 30, 200 * self.engine.hero.hp / self.engine.hero.max_hp, 30))
-        pygame.draw.rect(self, colors["green"], (50, 70,
-                                                 200 * self.engine.hero.exp / (100 * (2**(self.engine.hero.level - 1))), 30))
+        pygame.draw.rect(self, colors["red"],
+        (50, 30, 200 * self.engine.hero.hp / self.engine.hero.max_hp, 30))
+        pygame.draw.rect(self, colors["green"],
+        (50, 70, 200 * self.engine.hero.exp / (100 * (2**(self.engine.hero.level - 1))), 30))
 
         font = pygame.font.SysFont("comicsansms", 20)
-        self.blit(font.render(f'Hero at {self.engine.hero.position}', True, colors["black"]),
-                  (250, 0))
+        self.blit(font.render(f'Hero at {self.engine.hero.position}', True, colors["black"]), (250, 0))
 
-        self.blit(font.render(f'{self.engine.level} floor', True, colors["black"]),
-                  (10, 0))
+        self.blit(font.render(f'{self.engine.level} floor', True, colors["black"]), (10, 0))
 
-        self.blit(font.render(f'HP', True, colors["black"]),
-                  (10, 30))
-        self.blit(font.render(f'Exp', True, colors["black"]),
-                  (10, 70))
+        self.blit(font.render(f'HP', True, colors["black"]), (10, 30))
+        self.blit(font.render(f'Exp', True, colors["black"]), (10, 70))
 
-        self.blit(font.render(f'{self.engine.hero.hp}/{self.engine.hero.max_hp}', True, colors["black"]),
-                  (60, 30))
-        self.blit(font.render(f'{self.engine.hero.exp}/{(100*(2**(self.engine.hero.level-1)))}', True, colors["black"]),
-                  (60, 70))
+        self.blit(font.render(f'{self.engine.hero.hp}/{self.engine.hero.max_hp}', True, colors["black"]), (60, 30))
+        self.blit(font.render(f'{self.engine.hero.exp}/{(100*(2**(self.engine.hero.level-1)))}', True, colors["black"]), (60, 70))
 
-        self.blit(font.render(f'Level', True, colors["black"]),
-                  (300, 30))
-        self.blit(font.render(f'Gold', True, colors["black"]),
-                  (300, 70))
+        self.blit(font.render(f'Level', True, colors["black"]), (300, 30))
+        self.blit(font.render(f'Gold', True, colors["black"]),(300, 70))
 
-        self.blit(font.render(f'{self.engine.hero.level}', True, colors["black"]),
-                  (360, 30))
-        self.blit(font.render(f'{self.engine.hero.gold}', True, colors["black"]),
-                  (360, 70))
+        self.blit(font.render(f'{self.engine.hero.level}', True, colors["black"]), (360, 30))
+        self.blit(font.render(f'{self.engine.hero.gold}', True, colors["black"]), (360, 70))
 
-        self.blit(font.render(f'Str', True, colors["black"]),
-                  (420, 30))
-        self.blit(font.render(f'Luck', True, colors["black"]),
-                  (420, 70))
+        self.blit(font.render(f'Str', True, colors["black"]), (420, 30))
+        self.blit(font.render(f'Luck', True, colors["black"]), (420, 70))
 
-        self.blit(font.render(f'{self.engine.hero.stats["strength"]}', True, colors["black"]),
-                  (480, 30))
-        self.blit(font.render(f'{self.engine.hero.stats["luck"]}', True, colors["black"]),
-                  (480, 70))
+        self.blit(font.render(f'{self.engine.hero.stats["strength"]}', True, colors["black"]), (480, 30))
+        self.blit(font.render(f'{self.engine.hero.stats["luck"]}', True, colors["black"]), (480, 70))
 
-        self.blit(font.render(f'SCORE', True, colors["black"]),
-                  (550, 30))
-        self.blit(font.render(f'{self.engine.score:.4f}', True, colors["black"]),
-                  (550, 70))
+        self.blit(font.render(f'SCORE', True, colors["black"]), (550, 30))
+        self.blit(font.render(f'{self.engine.score:.4f}', True, colors["black"]), (550, 70))
 
     # draw next surface in chain
         super().draw(canvas)
@@ -179,7 +163,6 @@ class InfoWindow(ScreenHandle):
         for i, text in enumerate(self.data):
             self.blit(font.render(text, True, colors["black"]),
                       (5, 20 + 18 * i))
-
     # FIXME
     # draw next surface in chain
         super().draw(canvas)
