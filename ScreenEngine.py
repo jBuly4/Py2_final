@@ -32,7 +32,7 @@ class ScreenHandle(pygame.Surface):
     # FIXME connect_engine
     def connect_engine(self, engine):
         if self.successor is not None:
-            self.successor.connect_engine(engine)
+            return self.successor.connect_engine(engine)
 
 
 class GameSurface(ScreenHandle):
@@ -65,8 +65,7 @@ class GameSurface(ScreenHandle):
         if self.game_engine.map:
             for i in range(len(self.game_engine.map[0]) - min_x):
                 for j in range(len(self.game_engine.map) - min_y):
-                    self.blit(self.game_engine.map[min_y + j][min_x + i][
-                              0], (i * self.game_engine.sprite_size, j * self.game_engine.sprite_size))
+                    self.blit(self.game_engine.map[min_y + j][min_x + i][0], (i * self.game_engine.sprite_size, j * self.game_engine.sprite_size))
         else:
             self.fill(colors["white"])
 
@@ -88,7 +87,6 @@ class GameSurface(ScreenHandle):
             ((obj.position[0] - min_x) * size,                     (obj.position[1] - min_y) * size)
             )
         self.draw_hero()
-
     # draw next surface in chain
         super().draw(canvas)
 
@@ -139,7 +137,6 @@ class ProgressBar(ScreenHandle):
 
         self.blit(font.render(f'SCORE', True, colors["black"]), (550, 30))
         self.blit(font.render(f'{self.engine.score:.4f}', True, colors["black"]), (550, 70))
-
     # draw next surface in chain
         super().draw(canvas)
 
@@ -157,7 +154,7 @@ class InfoWindow(ScreenHandle):
 
     def draw(self, canvas):
         self.fill(colors["wooden"])
-        size = self.get_size()
+        # size = self.get_size() # useless line
 
         font = pygame.font.SysFont("comicsansms", 10)
         for i, text in enumerate(self.data):
@@ -205,13 +202,10 @@ class HelpWindow(ScreenHandle):
         font1 = pygame.font.SysFont("courier", 24)
         font2 = pygame.font.SysFont("serif", 24)
         if self.engine.show_help:
-            pygame.draw.lines(self, (255, 0, 0, 255), True, [
-                              (0, 0), (700, 0), (700, 500), (0, 500)], 5)
+            pygame.draw.lines(self, (255, 0, 0, 255), True, [(0, 0), (700, 0), (700, 500), (0, 500)], 5)
             for i, text in enumerate(self.data):
-                self.blit(font1.render(text[0], True, ((128, 128, 255))),
-                          (50, 50 + 30 * i))
-                self.blit(font2.render(text[1], True, ((128, 128, 255))),
-                          (150, 50 + 30 * i))
+                self.blit(font1.render(text[0], True, ((128, 128, 255))), (50, 50 + 30 * i))
+                self.blit(font2.render(text[1], True, ((128, 128, 255))), (150, 50 + 30 * i))
     # FIXME
     # draw next surface in chain
         super().draw(canvas)
