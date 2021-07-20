@@ -7,6 +7,7 @@
 ![image](https://github.com/jBuly4/Py2_final/blob/master/UML/ScreenEngine.png)
 
 **Service.py**
+
 ![image](https://github.com/jBuly4/Py2_final/blob/master/UML/Service.png)
 
 **Дополнительные задачи:**
